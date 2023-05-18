@@ -8,13 +8,13 @@
 //     return total;
 // };
 
-// function sum(...nums) {
-//     let total = 0;
-//     nums.forEach (num => {
-//         total += num;
-//     });
-//     return total;
-// };
+function sum(...nums) {
+    let total = 0;
+    nums.forEach (num => {
+        total += num;
+    });
+    return total;
+};
 
 // console.log(sum(1, 2, 3, 4) === 10);
 // console.log(sum(1, 2, 3, 4, 5) === 15);
@@ -81,31 +81,47 @@ class Cat {
   // Pavlov says meow to me!
   // true
 
-function curriedSum(numArg) {
-    let args = [];
-    return function _curry(num) {
-        args.push(num)
-        if (args.length === numArg) {
-            return args.reduce((acc, element) => acc + element);
-        } else {
-            return _curry;
-        }
-    }
+// function curriedSum(numArg) {
+//     let args = [];
+//     return function _curry(num) {
+//         args.push(num)
+//         if (args.length === numArg) {
+//             return args.reduce((acc, element) => acc + element);
+//         } else {
+//             return _curry;
+//         }
+//     }
 
-};
+// };
 
-const sum = curriedSum(4);
-console.log(sum(5)(30)(20)(1)); // => 56
+// const sum = curriedSum(4);
+// console.log(sum(5)(30)(20)(1)); // => 56
 
+// Function.prototype.curry = function (numArgs) {
+//     let args = [];
+//     const func = this; //context is important
+//     return function _curry(arg) {
+//         args.push(arg);
+//         if (args.length === numArgs) {
+//             return func.call(null, ...args); //context is important
+//         } else {
+//             return _curry;
+//         }
+//     }
+// };
+
+//ES6 syntax 
 Function.prototype.curry = function (numArgs) {
     let args = [];
-    return function _curry(arg) {
+    return _curry = arg => {
         args.push(arg);
         if (args.length === numArgs) {
-            this.call(this, args);
+            return this.call(null, ...args); //context is important
         } else {
             return _curry;
         }
-    }
-
+    };
 };
+
+
+console.log(sum.curry(4)(5)(30)(20)(1));
